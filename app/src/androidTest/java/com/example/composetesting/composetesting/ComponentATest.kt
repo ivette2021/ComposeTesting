@@ -22,6 +22,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
@@ -33,20 +34,23 @@ import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import com.example.composetesting.components.ComponentA
+import org.junit.Before
 
 import org.junit.Rule
 import org.junit.Test
-
 class ComponentATest {
     @get:Rule //creamos una regla para que la clase de test entienda (regla son como configuraciones preparada)
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun myFirstTest() {  //los test comienzan en minuscula
+    @Before
+    fun setUp() {
         composeTestRule.setContent {
             ComponentA()
         }
+    }
 
+    @Test
+    fun myFirstTest() {  //los test comienzan en minuscula
 
         //Finders
         composeTestRule.onNodeWithText(
@@ -72,9 +76,11 @@ class ComponentATest {
             swipeRight()
         }
         composeTestRule.onNodeWithText("ivi").performScrollTo()
-       // composeTestRule.onNodeWithText("ivi").performScrollTo().performClick().performTextInput("blah blah") //eejmplo de que algunos se pueden continuar en una linea
-        composeTestRule.onNodeWithText("ivi").performImeAction()//se refiere al boton que hace salto de linea o boton azul en el teclado o enter
-        composeTestRule.onNodeWithText("ivi").performTextInput("hola que tal") //este no permite poner otro parametros como . performClick
+        // composeTestRule.onNodeWithText("ivi").performScrollTo().performClick().performTextInput("blah blah") //eejmplo de que algunos se pueden continuar en una linea
+        composeTestRule.onNodeWithText("ivi")
+            .performImeAction()//se refiere al boton que hace salto de linea o boton azul en el teclado o enter
+        composeTestRule.onNodeWithText("ivi")
+            .performTextInput("hola que tal") //este no permite poner otro parametros como . performClick
         composeTestRule.onNodeWithText("ivi").performTextReplacement("no se que decir")
 
         //Assertions
@@ -91,11 +97,25 @@ class ComponentATest {
         composeTestRule.onNodeWithText("ivi").assertIsFocused()
         composeTestRule.onNodeWithText("ivi").assertIsOn()
         composeTestRule.onNodeWithText("ivi").assertIsOff()
-        composeTestRule.onNodeWithText("ivi").assertTextEquals("") //compruebo que el texto es igual a esto ""
+        composeTestRule.onNodeWithText("ivi")
+            .assertTextEquals("") //compruebo que el texto es igual a esto ""
         composeTestRule.onNodeWithText("ivi").assertTextContains("Ivi")
 
+        @Test
+        fun whenComponentStart_thenVerifyContentIsA() { //nombre del test esta dividido en dos partes lo que va a pasar y lo que deberia pasar
+            composeTestRule.setContent { //este se coloca en todos los test
+                ComponentA()
+            }
+        }
+        composeTestRule.onNodeWithText("ivi", ignoreCase = true)
+            .assertExists() //saldra psoitivo pero si le agregaramos a ivi una t por ej daria error
+        composeTestRule.onNodeWithTag("textFieldName").assertTextContains("I")
 
+    }
 
-
+    @Test
+    fun whenName_IsAdded_thenVerifyTextContainGreeting() { //dice:  cuando se incluya o se añada un nombre ,verifica que el texto tenga un saludo o greeting
+        composeTestRule.onNodeWithTag("textFieldname").performTextReplacement("Jessica")
+        composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Te llamas Jessica")
     }
 }

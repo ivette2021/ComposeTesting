@@ -32,7 +32,7 @@ fun ComponentA() {
 //        Image(Icons.Default.Add, contentDescription = "sImage")
 //        Image(Icons.Default.Add, contentDescription = "xsImage")
 //        Image(Icons.Default.Add, contentDescription = "xsImage")
-        Image(Icons.Default.Add, contentDescription = "xsImage")
+//        Image(Icons.Default.Add, contentDescription = "xsImage")
 
         TextField(value = name, onValueChange = {name = it}, modifier = Modifier.testTag("textFieldName"))//le agregamos un modifier para agregar el tag para hacer el test
       //  Text(text = "Te llamas $name")

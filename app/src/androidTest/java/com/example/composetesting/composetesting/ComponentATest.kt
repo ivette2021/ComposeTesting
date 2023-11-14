@@ -43,16 +43,18 @@ class ComponentATest {
     @get:Rule //creamos una regla para que la clase de test entienda (regla son como configuraciones preparada)
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setUp() {
-        composeTestRule.setContent {
-            ComponentA()
-        }
-    }
+//    @Before
+//    fun setUp() {
+//        composeTestRule.setContent {
+//            ComponentA()
+//        }
+//    }
 
     @Test
     fun myFirstTest() {  //los test comienzan en minuscula
-
+        composeTestRule.setContent {
+            ComponentA()
+        }
         //Finders
         composeTestRule.onNodeWithText(
             "ivette",
@@ -102,25 +104,27 @@ class ComponentATest {
             .assertTextEquals("") //compruebo que el texto es igual a esto ""
         composeTestRule.onNodeWithText("ivette").assertTextContains("Ivette")
 
+    }
+
         @Test
         fun whenComponentStart_thenVerifyContentIsA() { //nombre del test esta dividido en dos partes lo que va a pasar y lo que deberia pasar
             composeTestRule.setContent { //este se coloca en todos los test
                 ComponentA()
             }
-        }
+
         composeTestRule.onNodeWithText("ivette", ignoreCase = true)
             .assertExists() //saldra psoitivo pero si le agregaramos a ivi una t por ej daria error
         composeTestRule.onNodeWithTag("textFieldName").assertTextContains("Ivette")
+}
 
-    }
 
     @Test
     fun whenName_IsAdded_thenVerifyTextContainGreeting() { //dice:  cuando se incluya o se añada un nombre ,verifica que el texto tenga un saludo o greeting
         composeTestRule.setContent { //este se coloca en todos los test
             ComponentA()
         }
-        composeTestRule.onNodeWithTag("textFieldname").performTextClearance() //limpia el text filed
-         composeTestRule.onNodeWithTag("textFieldname").performTextInput("Jessica") //coloca esta linea
+        composeTestRule.onNodeWithTag("textFieldName").performTextClearance() //limpia el text filed
+         composeTestRule.onNodeWithTag("textFieldName").performTextInput("Jessica") //coloca esta linea
 
         //composeTestRule.onNodeWithTag("textFieldname").performTextReplacement("Jessica")
         composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Te llamas Jessica")

@@ -24,17 +24,18 @@ fun ComponentA() {
     }
 
     Column(Modifier.fillMaxSize()){
-        Text(text = "Ivette",Modifier.testTag("component1"))
-        Text(text = "Ivi", Modifier.testTag("component2"))
-        Text(text = "Ihiviko", Modifier.testTag("component3"))
-        Text(text = "Ita", Modifier.testTag("component4"))
-
-        Image(Icons.Default.Add, contentDescription = "sImage")
-        Image(Icons.Default.Add, contentDescription = "xsImage")
-        Image(Icons.Default.Add, contentDescription = "xsImage")
+//        Text(text = "Ivette",Modifier.testTag("component1"))
+//        Text(text = "Ivi", Modifier.testTag("component2"))
+//        Text(text = "Ihiviko", Modifier.testTag("component3"))
+//        Text(text = "Ita", Modifier.testTag("component4"))
+//
+//        Image(Icons.Default.Add, contentDescription = "sImage")
+//        Image(Icons.Default.Add, contentDescription = "xsImage")
+//        Image(Icons.Default.Add, contentDescription = "xsImage")
         Image(Icons.Default.Add, contentDescription = "xsImage")
 
         TextField(value = name, onValueChange = {name = it}, modifier = Modifier.testTag("textFieldName"))//le agregamos un modifier para agregar el tag para hacer el test
+      //  Text(text = "Te llamas $name")
         Text(text = "Te llamas $name", modifier = Modifier.testTag("textGreeting"))
     }
 }

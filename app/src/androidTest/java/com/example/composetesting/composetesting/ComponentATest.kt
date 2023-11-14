@@ -27,6 +27,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
@@ -84,22 +85,22 @@ class ComponentATest {
         composeTestRule.onNodeWithText("ivi").performTextReplacement("no se que decir")
 
         //Assertions
-        composeTestRule.onNodeWithText("ivi").assertExists()
-        composeTestRule.onNodeWithText("ivi").assertDoesNotExist()
-        composeTestRule.onNodeWithText("ivi").assertContentDescriptionContains("EADWAD")
-        composeTestRule.onNodeWithText("ivi").assertContentDescriptionEquals("EADWAD")
-        composeTestRule.onNodeWithText("ivi").assertIsDisplayed() //es visible
-        composeTestRule.onNodeWithText("ivi").assertIsNotDisplayed() //no es visible
-        composeTestRule.onNodeWithText("ivi").assertIsEnabled()
-        composeTestRule.onNodeWithText("ivi").assertIsNotEnabled()
-        composeTestRule.onNodeWithText("ivi").assertIsSelected()
-        composeTestRule.onNodeWithText("ivi").assertIsNotSelected()
-        composeTestRule.onNodeWithText("ivi").assertIsFocused()
-        composeTestRule.onNodeWithText("ivi").assertIsOn()
-        composeTestRule.onNodeWithText("ivi").assertIsOff()
-        composeTestRule.onNodeWithText("ivi")
+        composeTestRule.onNodeWithText("ivette").assertExists()
+        composeTestRule.onNodeWithText("ivette").assertDoesNotExist()
+        composeTestRule.onNodeWithText("ivette").assertContentDescriptionContains("EADWAD")
+        composeTestRule.onNodeWithText("ivette").assertContentDescriptionEquals("EADWAD")
+        composeTestRule.onNodeWithText("ivette").assertIsDisplayed() //es visible
+        composeTestRule.onNodeWithText("ivette").assertIsNotDisplayed() //no es visible
+        composeTestRule.onNodeWithText("ivette").assertIsEnabled()
+        composeTestRule.onNodeWithText("ivette").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("ivette").assertIsSelected()
+        composeTestRule.onNodeWithText("ivette").assertIsNotSelected()
+        composeTestRule.onNodeWithText("ivette").assertIsFocused()
+        composeTestRule.onNodeWithText("ivette").assertIsOn()
+        composeTestRule.onNodeWithText("ivette").assertIsOff()
+        composeTestRule.onNodeWithText("ivette")
             .assertTextEquals("") //compruebo que el texto es igual a esto ""
-        composeTestRule.onNodeWithText("ivi").assertTextContains("Ivi")
+        composeTestRule.onNodeWithText("ivette").assertTextContains("Ivette")
 
         @Test
         fun whenComponentStart_thenVerifyContentIsA() { //nombre del test esta dividido en dos partes lo que va a pasar y lo que deberia pasar
@@ -107,15 +108,23 @@ class ComponentATest {
                 ComponentA()
             }
         }
-        composeTestRule.onNodeWithText("ivi", ignoreCase = true)
+        composeTestRule.onNodeWithText("ivette", ignoreCase = true)
             .assertExists() //saldra psoitivo pero si le agregaramos a ivi una t por ej daria error
-        composeTestRule.onNodeWithTag("textFieldName").assertTextContains("I")
+        composeTestRule.onNodeWithTag("textFieldName").assertTextContains("Ivette")
 
     }
 
     @Test
     fun whenName_IsAdded_thenVerifyTextContainGreeting() { //dice:  cuando se incluya o se añada un nombre ,verifica que el texto tenga un saludo o greeting
-        composeTestRule.onNodeWithTag("textFieldname").performTextReplacement("Jessica")
+        composeTestRule.setContent { //este se coloca en todos los test
+            ComponentA()
+        }
+        composeTestRule.onNodeWithTag("textFieldname").performTextClearance() //limpia el text filed
+         composeTestRule.onNodeWithTag("textFieldname").performTextInput("Jessica") //coloca esta linea
+
+        //composeTestRule.onNodeWithTag("textFieldname").performTextReplacement("Jessica")
         composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Te llamas Jessica")
+
     }
+
 }
